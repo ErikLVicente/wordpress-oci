@@ -1,17 +1,16 @@
-# oci-arch-wordpress-mds
+# oci-arch-wordpress-mysql-matomo
 
 ## Prerequisites
 
-- Permission to `manage` the following types of resources in your Oracle Cloud Infrastructure tenancy: `vcns`, `internet-gateways`, `route-tables`, `security-lists`, `subnets`, `mysql-family`, and `instances`.
+- Permission to `manage` the following types of resources in your Oracle Cloud Infrastructure tenancy: `vcns`, `internet-gateways`, `route-tables`, `security-lists`, `subnets`, and `instances`.
 
-- Quota to create the following resources: 1 VCN, 2 subnets, 1 Internet Gateway, 1 NAT Gateway, 2 route rules, 1 MySQL Database System (MDS) instance, and 1 compute instance (WordPress CMS).
+- Quota to create the following resources: 1 VCN, 2 subnets, 1 Internet Gateway, 1 NAT Gateway, 2 route rules, and 3 compute instance (WordPress CMS VM, MySQL VM, Matomo VM).
 
 If you don't have the required permissions and quota, contact your tenancy administrator. See [Policy Reference](https://docs.cloud.oracle.com/en-us/iaas/Content/Identity/Reference/policyreference.htm), [Service Limits](https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/servicelimits.htm), [Compartment Quotas](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcequotas.htm).
 
 ## Deploy Using Oracle Resource Manager
 
-1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-arch-wordpress-mds/releases/latest/download/oci-arch-wordpress-mds-stack-latest.zip)
-
+1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-arch-wordpress-mds/releases/latest/download/oci-arch-wordpress-mysql-matomo-stack-latest.zip)
 
     If you aren't already signed in, when prompted, enter the tenancy and user credentials.
 
@@ -37,7 +36,7 @@ Now, you'll want a local copy of this repo. You can make that with the commands:
 
 ```
     git clone https://github.com/oracle-quickstart/oci-arch-wordpress-mds.git
-    cd oci-arch-wordpress-mds
+    cd oci-arch-wordpress-mds/matomo
     ls
 ```
 
@@ -104,6 +103,37 @@ wordpress_wp-admin_url = http://193.122.198.19/wp-admin/
 wordpress_public_ip = 193.122.198.19
 `````
 
+You should also finish Matomo configuration by going to matomo_url from output and using mysql related outputs (mysql_instance_public_ip, matomo_username, matomo_password, matomo_schema):
+
+````
+matomo_url = "http://193.122.131.150/analytics/matomo/"
+mysql_instance_ip = "10.0.1.2"
+matomo_username = "matomo"
+matomo_password = "***********"
+matomo_schema = "matomo"
+`````
+
+![](./images/matomo_wizard1.png)
+
+![](./images/matomo_wizard2.png)
+
+![](./images/matomo_wizard3.png)
+
+![](./images/matomo_wizard4.png)
+
+![](./images/matomo_wizard5.png)
+
+![](./images/matomo_wizard6.png)
+
+![](./images/matomo_wizard7.png)
+
+![](./images/matomo_wizard8.png)
+
+![](./images/matomo_wizard9.png)
+
+![](./images/matomo_wizard10.png)
+
+
 ### Destroy the Deployment
 When you no longer need the deployment, you can run this command to destroy the resources:
 
@@ -111,10 +141,9 @@ When you no longer need the deployment, you can run this command to destroy the 
 
 ## Architecture Diagram
 
-![](./images/architecture-deploy-wordpress-mds.png)
+![](./images/architecture-deploy-wordpress-mysql-matomo.png)
 
 ## Reference Archirecture
 
-For details of the architecture, see [_Set up a WordPress CMS connected to a MySQL database in the cloud_](https://docs.oracle.com/en/solutions/deploy-wordpress-cms-with-mysql-dbs/index.html)
-
+For details of the architecture, see [_Set up WordPress with MySQL Database and Matomo Analytics using Arm-based Ampere A1 Compute resources_](https://docs.oracle.com/en/solutions/wordpress-arm-based-oci/index.html)
 
